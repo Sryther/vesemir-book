@@ -12,7 +12,7 @@ permissions:
 env:
   REGISTRY: docker.io
   NAMESPACE: sryther
-  IMAGE: coccinelle-quiz   # single image — built from the Containerfile at repo root
+  IMAGE: vesemir-book   # single image — built from the Containerfile at repo root
 
 jobs:
   meta:
