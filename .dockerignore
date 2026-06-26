@@ -1,0 +1,13 @@
+.git
+.gitignore
+.idea
+.vscode
+node_modules
+dist
+chart
+README.md
+*.md
+LICENSE
+Containerfile
+.dockerignore
+.containerignore

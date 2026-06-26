@@ -1,0 +1,14 @@
+apiVersion: v2
+name: vesemir-grimoire
+description: Le Grimoire de Vesemir — un livre-jeu statique (The Witcher 3) offert en cadeau.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - witcher
+  - grimoire
+  - quiz
+  - static-site
+home: https://example.com/vesemir-grimoire
+maintainers:
+  - name: Paul Rey

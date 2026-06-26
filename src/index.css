@@ -1,0 +1,717 @@
+/* ===== Fonts (bundled locally — no CDN) ===== */
+@font-face {
+  font-family: 'Dancing Script';
+  src: url('./fonts/dancing-400.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Dancing Script';
+  src: url('./fonts/dancing-700.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IM Fell English';
+  src: url('./fonts/imfell-400.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IM Fell English';
+  src: url('./fonts/imfell-italic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Mason Serif';
+  src: url('./fonts/mason-serif.woff2') format('woff2'),
+       url('./fonts/mason-serif.woff') format('woff');
+  font-weight: 400 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Great Vibes';
+  src: url('./fonts/great-vibes.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+/* The Witcher concert fonts (Adobe Typekit) — used for the gift reveal */
+@font-face {
+  font-family: 'Beaufort Pro';
+  src: url('./fonts/beaufort-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Beaufort Pro';
+  src: url('./fonts/beaufort-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gill Sans Nova';
+  src: url('./fonts/gill-300.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gill Sans Nova';
+  src: url('./fonts/gill-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gill Sans Nova';
+  src: url('./fonts/gill-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('./fonts/figtree.ttf') format('truetype');
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+:root {
+  --ink: #181206;            /* Vesemir's black ink (warm) */
+  --ink-soft: #44341c;       /* faded ink */
+  --sepia: #6a5026;          /* aged decorative ink */
+  --parchment: #e3d1a6;
+  --parchment-hi: #f0e2bf;
+  --parchment-lo: #c4ab7a;
+  --edge: #7a5a2c;
+  --gold: #9c7a2a;
+  --shadow: rgba(0, 0, 0, 0.55);
+  --hand: 'Dancing Script', 'Segoe Script', cursive;   /* Vesemir's hand (body text) */
+  --head: 'Mason Serif', Georgia, serif;               /* titres / headings */
+  --print: 'IM Fell English', Georgia, serif;          /* printed labels / initials */
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body, #root { height: 100%; margin: 0; }
+
+body {
+  font-family: var(--hand);
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 50% -5%, #2c1d0d 0%, #160d05 60%, #090502 100%);
+  background-attachment: fixed;   /* one continuous backdrop — no seam when scrolling */
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+}
+
+#root { display: flex; justify-content: center; align-items: stretch; }
+
+.book {
+  width: 100%;
+  max-width: 600px;
+  height: 100%;          /* full-height book: the page fills the viewport */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  perspective: 1900px;   /* gives the page-turn its depth */
+}
+
+/* ===== Page-turn animation ===== */
+.page-flip {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.page-flip.fwd  { transform-origin: left center;  animation: page-turn-fwd 0.55s ease both; }
+.page-flip.back { transform-origin: right center; animation: page-turn-back 0.55s ease both; }
+@keyframes page-turn-fwd {
+  from { transform: rotateY(92deg);  opacity: 0.1; }
+  to   { transform: rotateY(0deg);   opacity: 1; }
+}
+@keyframes page-turn-back {
+  from { transform: rotateY(-92deg); opacity: 0.1; }
+  to   { transform: rotateY(0deg);   opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-flip.fwd, .page-flip.back { animation: none; }
+}
+
+/* ===== The page ===== */
+/* The parchment is a full-height frame (it holds the vignette + the folded
+   navigation corners); its content scrolls inside .page-inner so the book
+   always fills the screen (ideal in fullscreen). */
+.page {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  margin: 12px;
+  border-radius: 3px 10px 4px 9px / 8px 4px 10px 5px;   /* uneven hand-cut corners */
+  color: var(--ink);
+  background-color: var(--parchment);
+  background-image:
+    radial-gradient(circle at 26% 22%, rgba(110, 75, 30, 0.16), transparent 9%),
+    radial-gradient(circle at 73% 16%, rgba(110, 75, 30, 0.12), transparent 6%),
+    radial-gradient(circle at 64% 71%, rgba(100, 65, 25, 0.16), transparent 11%),
+    radial-gradient(circle at 33% 82%, rgba(120, 85, 35, 0.12), transparent 8%),
+    radial-gradient(circle at 86% 55%, rgba(100, 65, 25, 0.10), transparent 7%),
+    radial-gradient(ellipse 120% 80% at 50% 50%, transparent 58%, rgba(90, 60, 25, 0.30) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='760'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.016' numOctaves='5' seed='8' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23ecdcb2' surfaceScale='1.6' diffuseConstant='1.05'%3E%3CfeDistantLight azimuth='235' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  background-size: auto, auto, auto, auto, auto, auto, cover;
+  /* edge darkening folded into the element's own box-shadow so the vignette
+     stays put while the content scrolls (an absolute pseudo-element would
+     scroll away with the text). */
+  box-shadow:
+    0 1px 0 rgba(255, 245, 220, 0.25) inset,
+    0 18px 44px var(--shadow),
+    inset 0 0 70px rgba(120, 80, 30, 0.22),
+    inset 0 0 40px 6px rgba(70, 45, 15, 0.28);
+  display: flex;
+  flex-direction: column;
+}
+
+/* the scrolling content area inside the frame */
+.page-inner {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 34px 28px 64px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+/* discreet aged scrollbar inside the page */
+.page-inner::-webkit-scrollbar { width: 10px; }
+.page-inner::-webkit-scrollbar-thumb {
+  background: rgba(90, 60, 25, 0.38);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.page-inner::-webkit-scrollbar-track { background: transparent; }
+.page-inner { scrollbar-width: thin; scrollbar-color: rgba(90, 60, 25, 0.38) transparent; }
+
+/* ===== Folded navigation corners (turn the page) ===== */
+.page-corner {
+  position: absolute;
+  bottom: 0;
+  width: 78px;
+  height: 78px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 8;
+  -webkit-tap-highlight-color: transparent;
+}
+.page-corner.next { right: 0; }
+.page-corner.back { left: 0; }
+.page-corner.disabled { cursor: default; }
+
+/* the curling flap of paper */
+.page-corner .fold {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: drop-shadow(0 3px 6px rgba(30, 18, 6, 0.45));
+}
+.page-corner.next .fold {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  background:
+    linear-gradient(135deg, transparent 45%, #b89a68 46%, #f3e7c6 60%, #d9c79a 100%);
+  border-bottom-right-radius: 9px;
+  transform-origin: bottom right;
+}
+.page-corner.back .fold {
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  background:
+    linear-gradient(225deg, transparent 45%, #b89a68 46%, #f3e7c6 60%, #d9c79a 100%);
+  border-bottom-left-radius: 9px;
+  transform-origin: bottom left;
+}
+.page-corner:not(.disabled):hover .fold { transform: scale(1.16); }
+.page-corner:not(.disabled):active .fold { transform: scale(1.06); }
+.page-corner.disabled .fold { opacity: 0.4; filter: none; }
+
+/* direction chevron sitting on the flap */
+.page-corner .arrow {
+  position: absolute;
+  bottom: 8px;
+  font-size: 1rem;
+  color: #5a4220;
+  pointer-events: none;
+}
+.page-corner.next .arrow { right: 9px; }
+.page-corner.back .arrow { left: 9px; }
+.page-corner.disabled .arrow { display: none; }
+
+/* label revealed on hover */
+.page-corner .corner-label {
+  position: absolute;
+  bottom: 16px;
+  white-space: nowrap;
+  font-family: var(--print);
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  background: rgba(243, 231, 198, 0.95);
+  padding: 3px 9px;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+.page-corner.next .corner-label { right: 64px; }
+.page-corner.back .corner-label { left: 64px; }
+.page-corner:not(.disabled):hover .corner-label { opacity: 1; transform: none; }
+
+/* gentle hint that the corner turns the page */
+.corner-hint {
+  position: relative; z-index: 1;
+  font-family: var(--print);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  text-align: right;
+  margin: 1.2em 0.2em 0 0;
+}
+
+/* ===== Typography ===== */
+h1, h2 { font-family: var(--head); font-weight: 700; margin: 0 0 0.25em; }
+
+.title {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-size: 2.6rem;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.subtitle {
+  position: relative; z-index: 1;
+  text-align: center;
+  font-family: var(--print);
+  font-style: italic;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+  font-size: 0.95rem;
+  margin-bottom: 0.6em;
+}
+
+.prose, .prose p {
+  position: relative; z-index: 1;
+  font-size: 1.68rem;
+  line-height: 1.5;
+  margin: 0 0 0.6em;
+  text-align: left;
+}
+.dropcap p:first-of-type::first-letter {
+  font-family: var(--print);
+  float: left;
+  font-size: 3.6rem;
+  line-height: 0.72;
+  padding: 0.06em 0.1em 0 0;
+  color: var(--ink);
+}
+
+.flourish {
+  position: relative; z-index: 1;
+  text-align: center;
+  color: var(--sepia);
+  font-size: 1.4rem;
+  margin: 0.1em 0 0.7em;
+  letter-spacing: 0.3em;
+  opacity: 0.7;
+}
+
+.riddle { color: var(--ink-soft); }
+.margin-note {
+  position: relative; z-index: 1;
+  font-size: 1.7rem;
+  color: var(--ink);
+  text-align: center;
+  transform: rotate(-1.1deg);
+  margin: 0.3em 0.6em 0.9em;
+  line-height: 1.3;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  position: relative; z-index: 1;
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 1.5rem;
+  padding: 8px 26px;
+  border: 1.5px solid var(--ink);
+  border-radius: 14px 8px 16px 7px / 8px 16px 7px 14px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease;
+  box-shadow: 1px 2px 0 rgba(40, 25, 8, 0.35);
+}
+.btn:active { transform: translateY(1px); }
+.btn.gold { border-width: 2px; }
+.btn:hover:not(:disabled) { background: rgba(60, 40, 15, 0.07); }
+.btn:disabled { opacity: 0.4; cursor: default; }
+
+.actions { position: relative; z-index: 1; margin-top: auto; padding-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ===== Cover / frontispiece ===== */
+.cover .page-inner { justify-content: center; gap: 0.4rem; text-align: center; }
+.cover .title { font-size: 3rem; }
+.cover .lead {
+  position: relative; z-index: 1;
+  font-size: 1.6rem; line-height: 1.5; color: var(--ink);
+  margin: 0.6em 1em 0;
+}
+.wolf-mark { display: block; width: 100%; height: auto; }
+.cover-wolf { width: min(56vw, 240px); margin: 0.4em auto 0.2em; }
+
+/* ===== Potion index ===== */
+.potion-list { position: relative; z-index: 1; list-style: none; padding: 0; margin: 0.5em 0; }
+.potion-list li {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 15px; margin: 9px 0;
+  border: 1px solid rgba(70, 45, 15, 0.35);
+  border-radius: 9px 4px 10px 5px / 5px 10px 4px 9px;
+  background: rgba(120, 80, 30, 0.05);
+  cursor: pointer;
+}
+.potion-list li.done { background: rgba(120, 80, 30, 0.12); }
+.potion-list .vial { font-size: 1.6rem; filter: saturate(0.7) brightness(0.9); }
+.potion-list .name { flex: 1; font-size: 1.7rem; }
+/* a found word is shown in the Witcher gift face */
+.potion-list li.done .name {
+  font-family: 'Beaufort Pro', 'Noto Serif', serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+}
+/* the revealed potion name on its page */
+.title.word-reveal {
+  font-family: 'Beaufort Pro', 'Noto Serif', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 2rem;
+}
+.potion-list .seal { font-size: 1.3rem; color: var(--ink-soft); }
+
+/* ===== Motus (legible printed letters on parchment) ===== */
+.motus { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 4px; }
+.motus-grid { display: flex; flex-direction: column; gap: 7px; max-width: 100%; overflow-x: auto; }
+.motus-row { display: flex; gap: 7px; justify-content: center; }
+.motus-cell {
+  width: 42px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--print);
+  font-size: 1.5rem; text-transform: uppercase;
+  border: 2px solid var(--ink);
+  background: rgba(240, 226, 191, 0.55);
+  color: var(--ink);
+  border-radius: 5px 3px 6px 4px;
+}
+.motus-cell.correct { background: var(--ink); color: var(--parchment-hi); }
+.motus-cell.present { border-radius: 50%; box-shadow: inset 0 0 0 2px var(--sepia); }
+.motus-cell.absent  { background: rgba(120, 95, 60, 0.22); color: var(--ink-soft); border-color: rgba(80, 55, 25, 0.45); }
+.motus-cell.filled  { border-color: var(--ink); }
+.motus-cell.tiny { width: 30px; height: 38px; font-size: 1.15rem; }
+.motus-cell.micro { width: 24px; height: 32px; font-size: 0.95rem; border-width: 1.5px; }
+/* fixed word separator: an empty gap, no border */
+.motus-cell.space { border: none; background: none; width: 12px; }
+.motus-cell.micro.space { width: 8px; }
+.motus-cell.tiny.space { width: 10px; }
+@media (max-width: 430px) {
+  .motus-cell { width: 32px; height: 40px; font-size: 1.2rem; }
+  .motus-cell.tiny { width: 26px; height: 34px; font-size: 1rem; }
+  .motus-cell.micro { width: 21px; height: 28px; font-size: 0.85rem; }
+}
+
+/* keyboard */
+.kbd { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 480px; margin-bottom: 28px; }
+.kbd-row { display: flex; gap: 5px; justify-content: center; }
+.key {
+  flex: 1; min-width: 0; height: 48px;
+  font-family: var(--print); font-size: 1.05rem;
+  border: 1px solid var(--ink); border-radius: 5px 3px 6px 4px;
+  background: rgba(240, 226, 191, 0.5); color: var(--ink);
+  cursor: pointer;
+}
+.key.wide { flex: 1.7; }
+.key:active { transform: translateY(1px); }
+.key.correct { background: var(--ink); color: var(--parchment-hi); }
+.key.present { box-shadow: inset 0 0 0 2px var(--sepia); }
+.key.absent  { background: rgba(120, 95, 60, 0.35); color: var(--ink-soft); }
+
+.feedback { position: relative; z-index: 1; text-align: center; font-style: italic; min-height: 1.4em; color: var(--ink-soft); font-size: 1.4rem; }
+
+/* ===== Hint reveal ===== */
+.hint-card {
+  position: relative; z-index: 1;
+  margin: 1.1em 0 0.3em; padding: 16px 22px;
+  border: 1px solid var(--ink);
+  border-radius: 10px 5px 12px 6px / 6px 12px 5px 10px;
+  background: rgba(120, 80, 30, 0.08);
+  text-align: center;
+}
+.hint-card .label {
+  font-family: 'Beaufort Pro', 'Noto Serif', serif;
+  font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft);
+}
+.hint-card .text { font-size: 1.8rem; color: var(--ink); margin-top: 0.25em; line-height: 1.3; }
+
+.fade-in { animation: fade 0.8s ease both; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ===== Banner hunt (les blasons du Nord) ===== */
+.kingdom-name { font-weight: 700; color: var(--ink); white-space: nowrap; }
+
+.banner-grid {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 0.6em auto 0.2em;
+  max-width: 380px;
+}
+.banner-option {
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px;
+  border: 1.5px solid rgba(70, 45, 15, 0.5);
+  border-radius: 9px 4px 10px 5px / 5px 10px 4px 9px;
+  background: rgba(120, 80, 30, 0.06);
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.banner-option:hover:not(:disabled) {
+  background: rgba(120, 80, 30, 0.14);
+  box-shadow: 0 3px 10px rgba(40, 25, 8, 0.35);
+  transform: translateY(-2px);
+}
+.banner-option:active:not(:disabled) { transform: translateY(0); }
+.banner-option.wrong {
+  cursor: default;
+  opacity: 0.32;
+  filter: grayscale(0.7);
+  animation: shake 0.4s;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.blason {
+  width: 100%;
+  max-width: 110px;
+  height: auto;
+  filter: drop-shadow(1px 2px 3px rgba(20, 12, 4, 0.4));
+}
+.blason-reveal { position: relative; z-index: 1; text-align: center; margin: 0.2em 0 0.6em; }
+.blason-big { max-width: 150px; }
+
+/* ===== Monster blind test ===== */
+.monster-play {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  margin: 0.2em 0 0.8em;
+}
+.monster-play .roar { font-size: 1.4rem; }
+.monster-search {
+  position: relative; z-index: 1;
+  width: 100%;
+  font-family: var(--print);
+  font-size: 1.1rem;
+  padding: 10px 14px;
+  color: var(--ink);
+  background: rgba(240, 226, 191, 0.6);
+  border: 1.5px solid var(--ink);
+  border-radius: 7px 4px 8px 5px;
+  margin-bottom: 10px;
+}
+.monster-search::placeholder { color: var(--ink-soft); font-style: italic; }
+.monster-choices {
+  position: relative; z-index: 1;
+  flex: 1 1 auto;          /* fill the remaining page height */
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  padding: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(90, 60, 25, 0.38) transparent;
+}
+.monster-choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--print);
+  font-size: 1.2rem;
+  text-align: left;
+  padding: 9px 14px;
+  color: var(--ink);
+  background: rgba(120, 80, 30, 0.06);
+  border: 1px solid rgba(70, 45, 15, 0.35);
+  border-radius: 7px 4px 8px 5px / 4px 8px 5px 7px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.monster-choice .micon {
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 4px;
+  filter: drop-shadow(0 1px 1px rgba(20, 12, 4, 0.4));
+}
+.monster-choice .mname { flex: 1; }
+
+/* the revealed monster's portrait, shown before the hint text */
+.monster-portrait { position: relative; z-index: 1; text-align: center; margin: 0.1em 0 0.7em; }
+.monster-portrait img {
+  width: min(60%, 200px);
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 8px;
+  filter: drop-shadow(0 3px 8px rgba(20, 12, 4, 0.5));
+}
+.monster-choice:hover:not(:disabled) { background: rgba(120, 80, 30, 0.16); }
+.monster-choice.wrong {
+  opacity: 0.35;
+  text-decoration: line-through;
+  cursor: default;
+}
+
+/* ===== Finale ===== */
+.finale .hint-list { position: relative; z-index: 1; list-style: none; padding: 0; margin: 0.7em 0; }
+.finale .hint-list li {
+  font-size: 1.5rem; color: var(--ink); margin: 0.4em 0; padding-left: 1.5em; position: relative;
+}
+.finale .hint-list li::before { content: '✦'; position: absolute; left: 0; color: var(--sepia); }
+.reveal-box {
+  position: relative; z-index: 1;
+  margin-top: 1em; padding: 20px;
+  border: 1.5px solid var(--ink); border-radius: 10px 6px 12px 7px;
+  background: rgba(120, 80, 30, 0.07);
+  text-align: center;
+}
+.reveal-box p { font-size: 1.4rem; margin: 0.35em 0; }
+.reveal-box .big { font-weight: 700; font-size: 1.9rem; color: var(--ink); margin: 0.2em 0; }
+
+/* ===== Gift reveal — styled like thewitcher.com/concert ===== */
+/* Title: Beaufort Pro, uppercase, gold texture clipped to the letters
+   (same technique as .hero-module-scss-module__TCxnpq__title). */
+.gift-title {
+  font-family: 'Beaufort Pro', 'Noto Serif', serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  line-height: 1.15;
+  font-size: 1.7rem;
+  margin: 0.15em 0 0.35em;
+  background: url('./assets/gold-texture.jpg') center / cover;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #c9a227; /* fallback if background-clip:text unsupported */
+}
+.gift-eyebrow {
+  font-family: var(--print);
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1.1rem !important;
+  margin-bottom: 0.5em;
+}
+/* Practical gift details (date, city, venue): Gill Sans Nova */
+.gift-info {
+  font-family: 'Gill Sans Nova', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.gift-info .seats {
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+}
+/* date + city: Beaufort Pro */
+.gift-datecity {
+  font-family: 'Beaufort Pro', 'Noto Serif', serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin: 0.4em 0 0.1em;
+}
+/* venue ("The Hall"): Figtree */
+.gift-venue {
+  font-family: 'Figtree', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin: 0 0 0.2em;
+}
+
+/* Witcher "ACHETER DES BILLETS" button style */
+.btn-witcher {
+  display: inline-block;
+  font-family: 'Gill Sans Nova', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  font-size: 1rem;
+  color: #e9d19c;
+  background: #141414;
+  border: 1px solid #b89b5e;
+  border-radius: 0;
+  padding: 16px 28px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+}
+.btn-witcher:hover {
+  background: #e9d19c;
+  color: #141414;
+  box-shadow: 0 0 20px rgba(233, 209, 156, 0.55);
+}
+.btn-witcher:active { transform: translateY(1px); }
+
+/* ===== Music toggle (lives centred in the top bar) ===== */
+.music-toggle {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  line-height: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(233, 209, 156, 0.45);
+  background: rgba(20, 14, 6, 0.55);
+  color: #e9d19c;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, background 0.2s ease, transform 0.08s ease;
+}
+.music-toggle:hover { opacity: 1; background: rgba(20, 14, 6, 0.85); }
+.music-toggle:active { transform: scale(0.94); }
+
+/* music control pinned to the cover's top-left corner (no top bar there) */
+.music-corner { position: absolute; top: 16px; left: 18px; z-index: 12; }
+
+/* ===== Top bar ===== */
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 18px 0; }
+.topbar .crumbs { font-family: var(--print); color: var(--parchment-lo); font-size: 0.9rem; font-style: italic; }
+.topbar .reset { font-family: var(--print); color: var(--parchment-lo); font-size: 0.85rem; background: none; border: none; cursor: pointer; text-decoration: underline; }
