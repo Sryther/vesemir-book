@@ -22,7 +22,7 @@ export const CONFIG = {
   sfxComplete: 'witcher-3-completed.mp3',
 
   concert: {
-    title: /* TITRE EXACT */ 'Celebrating 10 Years of The Witcher 3: Wild Hunt',
+    title: /* TITRE EXACT */ 'Celebrating 10 Years of The Witcher 3: Wild Hunt - Concert',
     date: /* DATE */ '21/11/2026',
     city: /* VILLE */ 'Zurich',
     venue: /* SALLE */ 'The Hall',
@@ -63,7 +63,7 @@ export const POTIONS = [
       "Elle ne recoud pas la chair ; elle fait mieux. Elle traque le poison de veine en veine, le dénoue, l'efface jusqu'à la dernière goutte. Bois-la, et la toxine qui devait t'emporter s'endort, vaincue, dans tes propres veines.",
       "Son nom, on l'a emprunté à un oiseau dont le plumage rivalise avec l'or — car l'or, vois-tu, ne dort pas toujours au fond d'une bourse ; parfois il se perche et il chante.",
     ],
-    hint: "L'or véritable n'emplit pas la bourse — il comble l'oreille.",
+    hint: "L'or véritable n'emplit pas la bourse mais il paye la note.",
   },
   {
     id: 'hirondelle',
@@ -76,7 +76,7 @@ export const POTIONS = [
       "On l'a baptisée du nom d'un petit oiseau qui, chaque année, franchit des royaumes entiers pour retrouver le nid qu'il avait quitté. Car la guérison, vois-tu, est elle aussi un voyage : elle exige la distance, la patience, et la promesse d'un retour.",
       "Plus d'un sorceleur n'a survécu à la longue route que par sa grâce.",
     ],
-    hint: "Comme l'oiseau migrateur, il faudra prendre la route pour l'atteindre.",
+    hint: "Comme ce migrateur, il faudra prendre la route pour l'atteindre.",
   },
   {
     id: 'lune',
@@ -102,7 +102,7 @@ export const POTIONS = [
       "Elle affûte le geste, fait gonfler dans les veines l'ardeur du combattant — puis elle la retient, la garde en réserve. Un feu patient qu'il faut savoir conserver jusqu'à l'instant qui décide de tout, jusqu'à l'ultime passe d'armes.",
       "Une faveur qu'on n'obtient qu'une fois, comme d'entrevoir une clairière interdite avant qu'elle ne se referme.",
     ],
-    hint: "Une faveur qu'on n'obtient qu'une fois — à savourer jusqu'à la dernière note.",
+    hint: "Une faveur qu'on n'obtient qu'une fois — à savourer jusqu'au dernier silence.",
   },
 ]
 
@@ -120,21 +120,21 @@ export const KINGDOMS = [
     name: 'Témérie',
     description:
       "La Témérie, fleuron du Nord, fière de ses lys d'argent sur champ de sable. Le roi Foltest y régnait — de la poigne, parfois trop d'orgueil, mais un véritable amour de sa terre. Geralt y a usé ses bottes et tranché bien des contrats. Une terre solide, ferme sous le pied.",
-    hint: "Tu la connais bien, cette terre étrangère où tu œuvres chaque jour sans jamais y dormir : c'est là, et non chez toi, que t'attend ton présent.",
+    hint: "Tu la connais bien, cette terre étrangère où tu œuvres chaque jour sans jamais y dormir : c'est là, et non chez toi, que t'attend mon secret.",
   },
   {
     id: 'redania',
     name: 'Rédanie',
     description:
       "La Rédanie, la plus puissante des couronnes du Nord, sous l'aigle d'argent. Radovid y régnait, l'esprit aussi vif que cruel, et nourrissait une haine glacée pour tout ce qui touche à la magie. Souviens-t'en, mon élève : là-bas, on dresse des bûchers pour les mages comme pour les monstres.",
-    hint: "L'aigle déploie ses ailes au cœur de la saison froide : c'est en plein hiver qu'on t'attend.",
+    hint: "L'aigle déploie ses ailes au cœur de la saison froide : c'est avant l'hiver qu'on t'attend.",
   },
   {
     id: 'kaedwen',
     name: 'Kaedwen',
     description:
       "Kaedwen, le plus vaste royaume du Nord — et celui que je connais le mieux. C'est dans ses montagnes, au creux d'une vallée que les cartes ont oubliée, que se dresse Kaer Morhen. La licorne est son emblème, le rude Henselt était son roi. Ici, louveteau, tu es chez toi.",
-    hint: "Par-delà des montagnes plus hautes encore que celles de Kaedwen, ton présent repose.",
+    hint: "Par-delà des montagnes plus hautes encore que celles de Kaedwen, mon secret repose.",
   },
   {
     id: 'aedirn',
@@ -155,14 +155,14 @@ export const KINGDOMS = [
     name: 'Lyria et Rivia',
     description:
       "Lyria et Rivia, deux noms sous une seule couronne. La reine Meve y menait ses armées en personne — peu de souverains pouvaient s'en vanter. Quant à Rivia... c'est le nom que Geralt s'est choisi : un sorceleur n'a pas de patrie, alors il a bien fallu qu'il s'en forge une.",
-    hint: "Deux noms sous une seule couronne — comme le Loup et son Enfant Surprise : ce présent-là ne se savoure qu'à deux.",
+    hint: "Deux noms sous une seule couronne — comme le Loup et son Enfant Surprise.",
   },
   {
     id: 'kovir',
     name: 'Kovir et Poviss',
     description:
       "Kovir et Poviss, tout au nord, là où l'océan ronge la côte. Plus d'or, de verre et de sel y transitent que partout ailleurs, et ses ports voient passer le monde entier. Le royaume se tient à l'écart des guerres des autres — « quand Kovir paie, le monde danse ». La richesse, vois-tu, est une muraille comme une autre.",
-    hint: "Quand Kovir paie, le monde danse : tout un orchestre, escorté de bardes venus du folklore, rejouera pour toi des airs que tu connais déjà par cœur.",
+    hint: "Quand Kovir paie, le monde danse.",
   },
 ]
 
@@ -179,19 +179,19 @@ export const MONSTERS = [
     id: 'leshen',
     name: 'Léchi',
     file: 'leshen.wav',
-    hint: "Le léchi fredonne un chant que la forêt n'a jamais oublié ; le tien non plus, tu le reconnaîtras dès la première note.",
+    hint: "Le léchi fredonne un chant que la forêt n'a jamais oublié.",
   },
   {
     id: 'griffon',
     name: 'Griffon',
     file: 'griffon.wav',
-    hint: "Le griffon franchit les cols à tire-d'aile ; toi, point n'est besoin d'ailes — la route ou le rail suffiront à t'y porter.",
+    hint: "Le griffon franchit les cols à tire-d'aile ; sa plume pourrait vibrer.",
   },
   {
     id: 'harpy',
     name: 'Harpie',
     file: 'harpy.wav',
-    hint: "Les harpies braillent en désordre ; là où tu te rends, c'est un chœur parfaitement accordé qui s'élèvera.",
+    hint: "Les harpies braillent en désordre ; mais, c'est un chœur parfaitement accordé qui s'élèvera.",
   },
   {
     id: 'banshee',
@@ -209,7 +209,7 @@ export const MONSTERS = [
     id: 'arachas',
     name: 'Arachas',
     file: 'arachas.wav',
-    hint: "On traque l'arachas à l'oreille ; ton présent, lui aussi, se reconnaît au son.",
+    hint: "On traque l'arachas à l'oreille ; et mon secret, lui aussi, s'y reconnaît.",
   },
 ]
 
